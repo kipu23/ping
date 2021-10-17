@@ -21,3 +21,26 @@ As we need the database for the development, we create a docker-compose-dev.yaml
 
 ### Create MS
 
+
+
+### Create BFF
+
+
+
+### Create UI
+
+
+
+
+
+# Backlog:
+Let's devops:
+- create jenkins pipeline
+- create metrics
+- create logging
+- deploy to kubernetes
+- create init containers
+- create readiness probes
+- create liveness probes
+- create monitoring (prometheus + grafana)
+- create log server (elasticsearch + kibana)
