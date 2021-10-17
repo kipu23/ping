@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+
+  ping-pong-mongo:
+    container_name: ping-pong-mongo
+    restart: always
+    build:
+      context: .
+      dockerfile: ./env/database/Dockerfile
+    ports:
+      - 27017:27017
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    volumes:
+      - ./env/database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - ping-pong-network
+
+networks:
+  ping-pong-network:
+    name: ping-pong-network
