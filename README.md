@@ -46,16 +46,57 @@ Now, we should create the microservice with the business logic. We do this based
 - implement *PingController.cs* in the *Contollers* directory
   - implement Get, Get(string id) and Create methods for now, add the remaining methods later if needed
 
-- modify launchSettings.json, to be able to test the application
-  - set launchUrl
-  - set applicationUrl
+- enable cors for the ui (https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0)
+  - in StartUp.cs, configure all origins with "*"
+
+- modify *launchSettings.json*, to be able to test the application
+  - set *launchUrl*
+  - set *applicationUrl*
 
 
-### Create BFF
-
+TODO: create docker-compose-backend.yaml
 
 
 ### Create UI
+
+In the svc directory, create a new angular project.
+
+- create new ng project
+  - **ng new ui**
+  - no routing, and css
+
+- add material design
+  - **cd ui**
+  - **ng add @angular/material**
+
+- add a ping service
+  - **ng g s services/ping**
+  - implement the ping service
+    - receives the HttpClient in the constructor
+    - do not forget to add HttpClient to app.module.ts !
+    - gets the backend url from the environment
+      - add the environment url to the *environments.ts* and *environment.prod.ts*
+      - the getAll method calls the endpoint
+
+- add a ping component
+  - **ng g c ping**
+  - implement the ping component.ts
+    - receives PingService in the constructor
+    - calls the service's getAll method in the ngOnInit() function
+TODO:
+  - implement the ping component.html
+    - create a table and populate with ping data
+    - add an input field and a button, to be able to send new message
+    - implement the function for the button
+
+- start using the new component instead of the default page
+  - modify app.component.html
+    - replace the placeholder with the selector of the new component, *\<app-ping>
+
+TODO: implement environment variable usage for the configs
+
+
+TODO: create docker-compose.yaml
 
 
 
