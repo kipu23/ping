@@ -12,7 +12,11 @@ export class PingService {
   constructor(private http: HttpClient) {
     this.url = environment.settings.backend;
    }
-   getAll() {
+  getAll() {
     return this.http.get<any>(this.url);
+  }
+
+  sendMessage(message: string) { 
+    this.http.post(this.url, {"message": message}).toPromise();
   }
 }

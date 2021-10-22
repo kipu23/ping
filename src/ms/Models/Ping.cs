@@ -13,6 +13,6 @@ namespace ms.Models
         public string Message { get; set; }
 
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
-        public DateTime Date { get; set; }
+        public DateTime Timestamp { get; set; }
     }
 }

@@ -1,10 +1,19 @@
-<div>
-    <h1>All pings</h1>
-</div>
-<div>
-    <ul class="list-unstyled">
-        <li *ngFor='let ping of pings'>
-            <h2>{{ ping.message }}</h2>
-        </li>
-    </ul>
-</div>
+
+<form [formGroup]="pingForm" (ngSubmit)="onSend()">
+    <mat-form-field>
+        <mat-label>Message</mat-label>
+        <input matInput formControlName="message">
+    </mat-form-field>
+    <button mat-raised-button>Send</button>
+</form>
+
+<table>
+    <tr>
+        <td><h3>Messages</h3></td>
+    </tr>
+    <tr *ngFor='let ping of pings'>
+        <td>{{ ping.id }}</td>
+        <td>{{ ping.message }}</td>
+        <td>{{ ping.timestamp }}</td>
+    </tr>
+</table>

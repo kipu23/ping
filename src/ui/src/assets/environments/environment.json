@@ -1,0 +1,6 @@
+{
+    "production": false,
+    "settings": {
+        "backend": "http://localhost:5000/api/ping"
+    }
+}

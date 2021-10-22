@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { PingService } from '../services/ping.service';
 
 @Component({
@@ -8,12 +9,27 @@ import { PingService } from '../services/ping.service';
 })
 export class PingComponent implements OnInit {
 
+  pingForm: FormGroup;
+  
   pings: any[] = [];
 
-  constructor(private service: PingService) { }
+  constructor(private service: PingService) { 
+    this.pingForm = new FormGroup(
+      {'message': new FormControl(null)}
+    )
+  }
 
   ngOnInit(): void {
+    this.getMessages();
+  }
+
+  getMessages() {
     this.service.getAll().subscribe(pings => this.pings = pings);
+  }
+
+  onSend() {
+    this.service.sendMessage(this.pingForm.controls.message.value);
+    location.reload();
   }
 
 }

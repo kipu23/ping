@@ -18,8 +18,6 @@ namespace ms
 {
     public class Startup
     {
-        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -32,11 +30,13 @@ namespace ms
         {
             services.AddCors(options =>
             {
-                options.AddPolicy(name: MyAllowSpecificOrigins,
-                                  builder =>
-                                  {
-                                      builder.WithOrigins("*");
-                                  });
+                options.AddDefaultPolicy(
+                            builder =>
+                            {
+                                builder.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader();
+                            });
             });
 
             services.Configure<PingDatabaseSettings>(
@@ -62,7 +62,7 @@ namespace ms
 
             app.UseRouting();
 
-            app.UseCors(MyAllowSpecificOrigins);
+            app.UseCors();
 
             app.UseAuthorization();
 

@@ -38,6 +38,9 @@ namespace ms.Controllers
         [HttpPost]
         public ActionResult<Ping> Create(Ping ping)
         {
+            DateTime currentDateTime = DateTime.UtcNow;
+            ping.Timestamp = currentDateTime;
+
             _pingService.Create(ping);
             return CreatedAtRoute("GetPing", new { id = ping.Id.ToString() }, ping);
         }

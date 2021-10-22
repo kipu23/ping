@@ -47,14 +47,13 @@ Now, we should create the microservice with the business logic. We do this based
   - implement Get, Get(string id) and Create methods for now, add the remaining methods later if needed
 
 - enable cors for the ui (https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0)
-  - in StartUp.cs, configure all origins with "*"
+  - in StartUp.cs, allow all origins, headers and methods.
 
 - modify *launchSettings.json*, to be able to test the application
   - set *launchUrl*
   - set *applicationUrl*
 
-
-TODO: create docker-compose-backend.yaml
+- create docker-compose-backend.yaml to be able to implement ui without running the ms in the IDE
 
 
 ### Create UI
@@ -83,24 +82,28 @@ In the svc directory, create a new angular project.
   - implement the ping component.ts
     - receives PingService in the constructor
     - calls the service's getAll method in the ngOnInit() function
-TODO:
+
   - implement the ping component.html
-    - create a table and populate with ping data
     - add an input field and a button, to be able to send new message
+    - import FormsModule and ReactiveFormsmodule in app.module.ts
     - implement the function for the button
+    - create a table and populate with ping data
+TODO
+    - add a little bit style
+TODO
 
 - start using the new component instead of the default page
   - modify app.component.html
     - replace the placeholder with the selector of the new component, *\<app-ping>
 
-TODO: implement environment variable usage for the configs
+To be able to run the ui later in a kubernetes pod, we need to load the environment variables from file. To achive this, create an environment.json in the /assets/environments directory, and load it at startup.
+
+- create the environment.json in the assets/environments directory
+- create an environmentLoader class, to load the json file
+- call the environmentLoader from the main.js
 
 
 TODO: create docker-compose.yaml
-
-
-
-
 
 # Backlog:
 Let's devops:
