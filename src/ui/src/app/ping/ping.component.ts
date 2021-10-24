@@ -12,6 +12,7 @@ export class PingComponent implements OnInit {
   pingForm: FormGroup;
   
   pings: any[] = [];
+  columnsToDisplay = ['id', 'timestamp', 'message'];
 
   constructor(private service: PingService) { 
     this.pingForm = new FormGroup(
@@ -28,8 +29,11 @@ export class PingComponent implements OnInit {
   }
 
   onSend() {
-    this.service.sendMessage(this.pingForm.controls.message.value);
-    location.reload();
+    if (this.pingForm.controls.message.value){
+      this.service.sendMessage(this.pingForm.controls.message.value);
+      location.reload();
+    }
+
   }
 
 }
