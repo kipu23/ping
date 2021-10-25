@@ -102,13 +102,27 @@ To be able to run the ui later in a kubernetes pod, we need to load the environm
 
 - create *docker-compose.yaml*
 
-Now, the application is ready, and now let's create the kubernetes yaml files. But first, we need to add our applicaiton's components to the dockerhub.
+Now, the application is ready, and now let's create the kubernetes yaml files. But first, we need to add our applicaiton's components to the dockerhub, to be able to pull it into the kubernetes cluster.
 
 
-# Add our containers to dockerhub
-- create an account at hub.docker.com
-- 
+## Add our images to dockerhub
+- create an account at hub.docker.com if you don't have any
+- tag the images
+  - docker image tag ping-pong-ms kipu23/ping-pong-ms
+  - docker image tag ping-pong-ui kipu23/ping-pong-ui
+- push the images to the registry
+  - docker push kipu23/ping-pong-ms
+  - docker push kipu23/ping-pong-ui
 
+## Create kubernetes yaml files
+- database:
+  1. create *ping-pong-mongo-configmap.yaml*
+  2. create *ping-pong-mongo-secrets.yaml*
+  3. create *ping-pong-mongo-statefulset.yaml*
+  4. create *ping-pong-mongo-service.yaml*
+  5. create *ping-pong-mongo-service-nodeport.yaml* (only for testing)
+- ms:
+  1. create
 
 # Backlog:
 Let's devops:
