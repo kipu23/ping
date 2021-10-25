@@ -1,4 +1,4 @@
-# ping-pong
+# Ping-Pong
 A ping-pong applicaiton to serve as a bootstrap code
 
 This code serves as a starting point for a microservice application. It contains a MongoDb database, a C# backend, a C# BFF, and an Angular ui.
@@ -6,18 +6,19 @@ This code serves as a starting point for a microservice application. It contains
 
 ## Creating the code
 
+
 ### Create MongoDb database
+We create the database with docker. As it is not really the application, only the database, we put it into the */env/database* directory.
 
-We create the database with docker. As it is not really the application, only the database, we put it into the \env\database directory.
-
-- create a directory named *env\database*
+- create a directory named *env/database*
 - create a file named *Dockerfile*
 - search for the latest image on hub.docker.com, and edit Dockerfile
 
-As we need the database for the development, we create a docker-compose-dev.yaml file, to be able to create a develompment environment with a running database.
+As we need the database for the development, we create a *docker-compose-dev.yaml* file, to be able to create a develompment environment with a running database.
 
 - create *docker-compose-dev.yaml*
 - create a *mongo-init.js* as well, to be able to create custom user/pass and collection
+
 
 ### Create MS
 Now, we should create the microservice with the business logic. We do this based on the following tutorial from microsoft: https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-3.1&tabs=visual-studio
@@ -33,7 +34,7 @@ Now, we should create the microservice with the business logic. We do this based
 
 - create a new directory named *Models* to store database model
 - implement *Ping.cs*, to store the *ping* database model
-- add db config to appsettings.json
+- add db config to *appsettings.json*
 - implement *PingDatabaseSettings.cs* in the *Models* directory to represent database settings
 - in the *Startup.cs*, bind the databasesetting with the config section
 - in the *Startup.cs*, register the databasesetting interface with singleton lifetime in DI
@@ -44,20 +45,19 @@ Now, we should create the microservice with the business logic. We do this based
 - in the startup.cs, register the service with singleton lifetime in DI
 
 - implement *PingController.cs* in the *Contollers* directory
-  - implement Get, Get(string id) and Create methods for now, add the remaining methods later if needed
+  - implement **Get**, **Get(string id)** and **Create** methods for now, add the remaining methods later if needed
 
 - enable cors for the ui (https://docs.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-5.0)
-  - in StartUp.cs, allow all origins, headers and methods.
+  - in *StartUp.cs*, allow all origins, headers and methods.
 
 - modify *launchSettings.json*, to be able to test the application
   - set *launchUrl*
   - set *applicationUrl*
 
-- create docker-compose-backend.yaml to be able to implement ui without running the ms in the IDE
+- create *docker-compose-backend.yaml* to be able to implement ui without running the ms in the IDE
 
 
 ### Create UI
-
 In the svc directory, create a new angular project.
 
 - create new ng project
@@ -71,11 +71,11 @@ In the svc directory, create a new angular project.
 - add a ping service
   - **ng g s services/ping**
   - implement the ping service
-    - receives the HttpClient in the constructor
-    - do not forget to add HttpClient to app.module.ts !
+    - receives the *HttpClient* in the constructor
+    - do not forget to add *HttpClient* to *app.module.ts* !
     - gets the backend url from the environment
       - add the environment url to the *environments.ts* and *environment.prod.ts*
-      - the getAll method calls the endpoint
+      - the *getAll* method calls the endpoint
 
 - add a ping component
   - **ng g c ping**
@@ -84,35 +84,46 @@ In the svc directory, create a new angular project.
     - calls the service's getAll method in the ngOnInit() function
 
   - implement the ping component.html
-    - add an input field and a button, to be able to send new message
+    - add an input field and a button (optional), to be able to send new message
     - import FormsModule and ReactiveFormsmodule in app.module.ts
-    - implement the function for the button
+    - implement the function for sendig the message
     - create a table and populate with ping data
-TODO
-    - add a little bit style
-TODO
+    - add a little bit style with material design
 
 - start using the new component instead of the default page
-  - modify app.component.html
-    - replace the placeholder with the selector of the new component, *\<app-ping>
+  - modify *app.component.html*
+    - replace the placeholder with the selector of the new component, \<app-ping>
 
-To be able to run the ui later in a kubernetes pod, we need to load the environment variables from file. To achive this, create an environment.json in the /assets/environments directory, and load it at startup.
+To be able to run the ui later in a kubernetes pod, we need to load the environment variables from file. To achive this, create an *environment.json* in the */assets/environments* directory, and load it at startup.
 
-- create the environment.json in the assets/environments directory
-- create an environmentLoader class, to load the json file
-- call the environmentLoader from the main.js
+- create the *environment.json* in the *assets/environments* directory
+- create an *environmentLoader* class, to load the json file
+- call the *environmentLoader* from the* main.js*
+
+- create *docker-compose.yaml*
+
+Now, the application is ready, and now let's create the kubernetes yaml files. But first, we need to add our applicaiton's components to the dockerhub.
 
 
-TODO: create docker-compose.yaml
+# Add our containers to dockerhub
+- create an account at hub.docker.com
+- 
+
 
 # Backlog:
 Let's devops:
-- create jenkins pipeline
-- create metrics
-- create logging
+
 - deploy to kubernetes
+  - create yaml files, and test it on minikube
+  - creaet azure kubernetes environment, and deploy the application
+- create jenkins pipeline
+  - implement automatic deployment to the kubernetes environment
+
 - create init containers
 - create readiness probes
 - create liveness probes
+
+- implement metrics
+- implement logging
 - create monitoring (prometheus + grafana)
 - create log server (elasticsearch + kibana)
