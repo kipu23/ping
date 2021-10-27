@@ -120,9 +120,14 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
   2. create *ping-pong-mongo-secrets.yaml*
   3. create *ping-pong-mongo-statefulset.yaml*
   4. create *ping-pong-mongo-service.yaml*
-  5. create *ping-pong-mongo-service-nodeport.yaml* (only for testing)
 - ms:
-  1. create
+  1. *create ping-pong-ms-deployment.yaml*
+  2. *create ping-pong-ms-service.yaml*
+- ui:
+  1. create ping-pong-ui-configmap.yaml
+  2. create ping-pong-ui-deployment.yaml
+  3. create ping-pong-ui-service.yaml
+- create ping-pong-ingress.yaml
 
 # Backlog:
 Let's devops:

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ping-pong-ui-config
+  labels:
+    app: ping-pong
+    tier: ui
+data:
+  environment.json: |    
+    {
+      "production": true,
+      "settings": {
+        "backend": "ping-pong-ms/api"
+      }
+    }

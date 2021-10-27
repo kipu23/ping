@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-pong-ms
+  labels:
+    app: ping-pong
+    tier: backend
+spec:
+  selector:
+    matchLabels:      
+      app: ping-pong
+      tier: backend
+  replicas: 2
+  template:
+    metadata:
+      name: ping-pong-ms
+      labels:
+        app: ping-pong
+        tier: backend
+    spec:
+      containers:
+        - name: ping-pong-ms
+          image: kipu23/ping-pong-ms
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: Development
+            - name: PingDatabaseSettings__ConnectionString
+              value: mongodb://ping:pong@ping-pong-mongo:27017/ping
+            - name: PingDatabaseSettings__DatabaseName
+              value: ping
+            - name: PingDatabaseSettings__CollectionName
+              value: pings

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ping-pong-ui
+  labels:
+    app: ping-pong
+    tier: frontend
+spec:
+  selector:
+    matchLabels:
+      app: ping-pong
+      tier: frontend
+  replicas: 2
+  template:
+    metadata:
+      name: ping-pong-ui
+      labels:
+        app: ping-pong
+        tier: frontend
+    spec:
+      containers:
+        - name: ping-pong-ui
+          image: kipu23/ping-pong-ui
+          volumeMounts:
+            - name: config
+              mountPath: /usr/share/nginx/html/assets/environments/environment.json
+              subPath: environment.json
+      volumes:
+        - name: config
+          configMap:
+            name: ping-pong-ui-config
+    
