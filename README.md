@@ -129,6 +129,12 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
   3. create ping-pong-ui-service.yaml
 - create ping-pong-ingress.yaml
 
+## deploy to k8s
+- install azure cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
+- create cluster (https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal)
+- install kubectl (https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/)
+- configure kubectl for multiple clusters (https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)
+
 # Backlog:
 Let's devops:
 
