@@ -2,16 +2,30 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ping-pong-ingress
+  namespace: ping-pong
   labels:
     app: ping-pong
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: ping.pong
+  - host: 8fc072c0923e49668fbc.westeurope.aksapp.io
     http:
       paths:
       - path: /
+        pathType: Prefix
         backend:
-          serviceName: ping-pong-ms
-          servicePort: 80
+          service:
+            name: ping-pong-ui
+            port:
+              number: 80
+  - host: 8fc072c0923e49668fbc.westeurope.aksapp.io
+    http:
+      paths:
+      - path: /api/ping
+        pathType: Prefix
+        backend:
+          service:
+            name: ping-pong-ms
+            port:
+              number: 80
