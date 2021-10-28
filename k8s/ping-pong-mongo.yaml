@@ -1,0 +1,90 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ping-pong-mongo-init
+  labels:
+    app: ping-pong
+    tier: database  
+data:
+  mongo-init.js: |
+    print('Starting mongo-init.js #################################################################');
+
+    db = db.getSiblingDB('ping');
+
+    db.createUser({
+        user: 'ping',
+        pwd: 'pong',
+        roles: [
+          {
+            role: 'readWrite',
+            db: 'ping'
+          }
+        ]
+    });
+
+    db.createCollection('pings');
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ping-pong-mongo-secret
+  labels:
+    app: ping-pong
+    tier: database
+data:
+  MONGO_INITDB_ROOT_PASSWORD: ZXhhbXBsZQ==
+  MONGO_INITDB_ROOT_USERNAME: cm9vdA==
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ping-pong-mongo
+  labels:
+    app: ping-pong
+    tier: database
+spec:
+  type: ClusterIP
+  selector:
+    app: ping-pong
+    tier: database
+  ports:
+    - port: 27017
+      targetPort: 27017
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: ping-pong-mongo
+  labels:
+    app: ping-pong
+    tier: database
+spec:
+  serviceName: ping-pong-mongo
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ping-pong
+      tier: database
+  template:
+    metadata:
+      labels:
+        app: ping-pong
+        tier: database
+    spec:
+      containers:
+      - name: ping-pong-mongo
+        image: mongo:5.0.3
+        envFrom:
+        - secretRef:
+            name: ping-pong-mongo-secret
+        volumeMounts:
+        - name: init-script
+          mountPath: /docker-entrypoint-initdb.d
+          readOnly: true
+      volumes:
+        - name: init-script
+          configMap:
+            name: ping-pong-mongo-init
+            items:
+            - key: mongo-init.js
+              path: mongo-init.js
