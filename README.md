@@ -115,32 +115,39 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
   - docker push kipu23/ping-pong-ui
 
 ## Create kubernetes yaml files
+(https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/)
+
+- namespace:
+  - create *ping-pong-namespace.yaml*
 - database:
-  1. create *ping-pong-mongo-configmap.yaml*
-  2. create *ping-pong-mongo-secrets.yaml*
-  3. create *ping-pong-mongo-statefulset.yaml*
-  4. create *ping-pong-mongo-service.yaml*
+  - create *ping-pong-mongo.yaml* with configmap, secret, service and statefulset.
 - ms:
-  1. *create ping-pong-ms-deployment.yaml*
-  2. *create ping-pong-ms-service.yaml*
+   - create *ping-pong-ms.yaml* with service and deployment
 - ui:
-  1. create ping-pong-ui-configmap.yaml
-  2. create ping-pong-ui-deployment.yaml
-  3. create ping-pong-ui-service.yaml
-- create ping-pong-ingress.yaml
+  - create *ping-pong-ui.yaml* with configmap, service and deployment
+- ingress:
+  - create *ping-pong-ingress.yaml*
 
 ## deploy to k8s
 - install azure cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 - create cluster (https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal)
 - install kubectl (https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/)
 - configure kubectl for multiple clusters (https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)
+- create multiple dns addresses for the app
+  - search for the DNS zone, and add record set with type A. IP address is the public ip of the ingress controller
+- update and run the yaml files (we need to update the ui and the ingress files)
+
+## install prometheus operator
+- https://www.youtube.com/watch?v=QoDqxm7ybLc&t=1s
+- create new namespace for prometheus
+  - kubectl create namespace kube-prometheus-stack
+  - kubectl config set-context --current --namespace=kube-prometheus-stack
+- https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+
 
 # Backlog:
 Let's devops:
 
-- deploy to kubernetes
-  - create yaml files, and test it on minikube
-  - creaet azure kubernetes environment, and deploy the application
 - create jenkins pipeline
   - implement automatic deployment to the kubernetes environment
 
@@ -152,3 +159,4 @@ Let's devops:
 - implement logging
 - create monitoring (prometheus + grafana)
 - create log server (elasticsearch + kibana)
+- create log server (grafana loki)
