@@ -1,0 +1,192 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jenkins
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: jenkins
+  namespace: jenkins
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: jenkins
+  namespace: jenkins
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["create","delete","get","list","patch","update","watch"]
+- apiGroups: [""]
+  resources: ["pods/exec"]
+  verbs: ["create","delete","get","list","patch","update","watch"]
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get","list","watch"]
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["create","delete","get","list","patch","update"]
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["create","delete","get","list","patch","update"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["create","delete","get","list","patch","update"]
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["create","delete","get","list","patch","update"]
+- apiGroups: [""]
+  resources: ["ingresses"]
+  verbs: ["create","delete","get","list","patch","update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: jenkins
+  namespace: jenkins
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: jenkins
+subjects:
+- kind: ServiceAccount
+  name: jenkins
+  namespace: jenkins
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: azure-secret
+  namespace: jenkins
+data:
+  azurestorageaccountkey: aEtUSnpyZ084UjFFUFJsOC9MYnB3U09ocTJ1aG43T0s2clA4T1E1YjdEZkNGM2p3cjAxOXpoV2ZLQkF2SGN0Z1pwV0xIZ1BNaFR6Z3J2Z3NyWURWa1E9PQ==
+  azurestorageaccountname: cGluZ3BvbmdzYQ==
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: jenkins
+  namespace: jenkins
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 5Gi
+  azureFile:
+    secretName: azure-secret
+    secretNamespace: jenkins
+    shareName: jenkins-fs
+    readOnly: false
+  claimRef:
+    name: jenkins-claim
+    kind: PersistentVolumeClaim
+    namespace: jenkins
+  persistentVolumeReclaimPolicy: Retain
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-claim
+  namespace: jenkins
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: default
+  resources:
+    requests:
+      storage: 5Gi
+  volumeName: jenkins
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    app: jenkins
+spec:
+  selector:
+    matchLabels:
+      app: jenkins
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      namespace: jenkins
+      labels:
+        app: jenkins
+    spec:
+      serviceAccountName: jenkins
+      containers:
+      - name: jenkins
+        image: jenkins/jenkins:2.321-alpine
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: JAVA_OPTS
+          value: -Xmx2048m -Dhudson.slaves.NodeProvisioner.MARGIN=50 -Dhudson.slaves.NodeProvisioner.MARGIN0=0.85
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        - containerPort: 50000
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /var/jenkins_home
+          name: jenkins
+      restartPolicy: Always
+      securityContext:
+        runAsUser: 0
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - name: jenkins
+        persistentVolumeClaim:
+          claimName: jenkins-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  namespace: jenkins
+  labels:
+    app: jenkins
+spec:
+  type: ClusterIP
+  ports:
+    - name: ui
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+    - name: slave
+      port: 50000
+      protocol: TCP
+    - name: http
+      port: 80
+      targetPort: 8080
+  selector:
+    app: jenkins
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: jenkins-ingress
+  namespace: jenkins
+  labels:
+    app: jenkins
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+  - host: jenkins.8fc072c0923e49668fbc.westeurope.aksapp.io
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: jenkins
+            port:
+              number: 8080

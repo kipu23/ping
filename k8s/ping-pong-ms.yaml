@@ -38,7 +38,7 @@ spec:
     spec:
       containers:
         - name: ping-pong-ms
-          image: kipu23/ping-pong-ms
+          image: kipu23/ping-pong-ms:1.0.1
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development

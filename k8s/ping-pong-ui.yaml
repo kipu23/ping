@@ -55,7 +55,7 @@ spec:
     spec:
       containers:
         - name: ping-pong-ui
-          image: kipu23/ping-pong-ui
+          image: kipu23/ping-pong-ui:1.0.1
           volumeMounts:
             - name: config
               mountPath: /usr/share/nginx/html/assets/environments/environment.json

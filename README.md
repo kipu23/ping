@@ -111,8 +111,8 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
   - docker image tag ping-pong-ms kipu23/ping-pong-ms
   - docker image tag ping-pong-ui kipu23/ping-pong-ui
 - push the images to the registry
-  - docker push kipu23/ping-pong-ms
-  - docker push kipu23/ping-pong-ui
+  - docker push kipu23/ping-pong-ms:1.0.0
+  - docker push kipu23/ping-pong-ui:1.0.0
 
 ## Create kubernetes yaml files
 (https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/)
@@ -137,12 +137,16 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
   - search for the DNS zone, and add record set with type A. IP address is the public ip of the ingress controller
 - update and run the yaml files (we need to update the ui and the ingress files)
 
-## install prometheus operator
+## install prometheus stack into *monitoring* namespace
 - https://www.youtube.com/watch?v=QoDqxm7ybLc&t=1s
 - create new namespace for prometheus
   - kubectl create namespace kube-prometheus-stack
   - kubectl config set-context --current --namespace=kube-prometheus-stack
 - https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+
+## install jenkins into *jenkins* namespace
+(https://www.jenkins.io/doc/book/installing/kubernetes/#create-a-persistent-volume)
+ 
 
 
 # Backlog:
