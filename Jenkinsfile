@@ -5,7 +5,7 @@ node('jenkins-slave') {
             echo "pipeline start"
             git clone https://github.com/kipu23/ping-pong
             cd ./ping-pong
-            docker-compose -f docker-compose.yaml build --parallel
+            docker-compose -f docker-compose-build.yaml build --parallel
         """)
     }
 }
