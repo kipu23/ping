@@ -4,7 +4,7 @@ metadata:
   name: grafana-ingress
   namespace: kube-prometheus-stack
   labels:
-    app: ping-pong
+    app: ping
   annotations:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:

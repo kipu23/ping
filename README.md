@@ -26,9 +26,9 @@ Now, we should create the microservice with the business logic. We do this based
 - in VS, create a new ASP.NET Core Web Application project with API template
   - Project name: *ms*
   - Location *\<location of the git repository>*
-  - Solution name: *ping-pong*
+  - Solution name: *ping*
 
-- I prefer to move the newly created *ms* directory and the *ping-pong.sln* file into a *src* folder, but this is optional.
+- I prefer to move the newly created *ms* directory and the *ping.sln* file into a *src* folder, but this is optional.
 
 - Check the latest version of the mongodb driver on the [NuGet Gallery: MongoDB.Driver](https://www.nuget.org/packages/MongoDB.Driver/), and open the Package Manager Console window to install mongodb driver with the following command: *Install-Package MongoDB.Driver -Version {version}*
 
@@ -108,25 +108,25 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 ## Add our images to dockerhub
 - create an account at hub.docker.com if you don't have any
 - tag the images
-  - docker image tag ping-pong-ms kipu23/ping-pong-ms
-  - docker image tag ping-pong-ui kipu23/ping-pong-ui
+  - docker image tag ping-ms kipu23/ping-ms:1.0.0
+  - docker image tag ping-ui kipu23/ping-ui:1.0.0
 - push the images to the registry
-  - docker push kipu23/ping-pong-ms:1.0.0
-  - docker push kipu23/ping-pong-ui:1.0.0
+  - docker push kipu23/ping-ms:1.0.0
+  - docker push kipu23/ping-ui:1.0.0
 
 ## Create kubernetes yaml files
 (https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/)
 
 - namespace:
-  - create *ping-pong-namespace.yaml*
+  - create *ping-namespace.yaml*
 - database:
-  - create *ping-pong-mongo.yaml* with configmap, secret, service and statefulset.
+  - create *ping-mongo.yaml* with configmap, secret, service and statefulset.
 - ms:
-   - create *ping-pong-ms.yaml* with service and deployment
+   - create *ping-ms.yaml* with service and deployment
 - ui:
-  - create *ping-pong-ui.yaml* with configmap, service and deployment
+  - create *ping-ui.yaml* with configmap, service and deployment
 - ingress:
-  - create *ping-pong-ingress.yaml*
+  - create *ping-ingress.yaml*
 
 ## deploy to k8s
 - install azure cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
@@ -152,6 +152,8 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 # Backlog:
 Let's devops:
 
+- ui: should work with enter key
+
 - create jenkins pipeline
   - implement automatic deployment to the kubernetes environment
 
@@ -164,3 +166,4 @@ Let's devops:
 - create monitoring (prometheus + grafana)
 - create log server (elasticsearch + kibana)
 - create log server (grafana loki)
+

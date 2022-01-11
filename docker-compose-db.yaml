@@ -2,9 +2,9 @@ version: '3.1'
 
 services:
 
-  ping-pong-mongo:
-    image: ping-pong-mongo
-    container_name: ping-pong-mongo
+  ping-mongo:
+    image: ping-mongo
+    container_name: ping-mongo
     restart: always
     build:
       context: .
@@ -17,8 +17,8 @@ services:
     volumes:
       - ./env/database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
-      - ping-pong-network
+      - ping-network
 
 networks:
-  ping-pong-network:
-    name: ping-pong-network
+  ping-network:
+    name: ping-network

@@ -2,17 +2,17 @@ version: '3.1'
 
 services:
 
-  ping-pong-ms:
-    image: ping-pong-ms
-    container_name: ping-pong-ms
+  ping-ms:
+    image: ping-ms
+    container_name: ping-ms
     restart: always
     build:
       context: .
       dockerfile: ./src/ms/Dockerfile
 
-  ping-pong-ui:
-    image: ping-pong-ui
-    container_name: ping-pong-ui
+  ping-ui:
+    image: ping-ui
+    container_name: ping-ui
     restart: always
     build:
       context: .

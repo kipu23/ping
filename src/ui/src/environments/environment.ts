@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   settings: {
-    backend: 'http://localhost:5000/api/ping'
+    backend: 'http://localhost:6002/api/ping'
   }
 };
 

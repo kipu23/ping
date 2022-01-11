@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: ping-pong-ms
-  namespace: ping-pong
+  name: ping-ms
+  namespace: ping
   labels:
-    app: ping-pong
+    app: ping
     tier: backend
 spec:
   type: ClusterIP
   selector:
-    app: ping-pong
+    app: ping
     tier: backend
   ports:
     - port: 80
@@ -18,32 +18,32 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ping-pong-ms
-  namespace: ping-pong
+  name: ping-ms
+  namespace: ping
   labels:
-    app: ping-pong
+    app: ping
     tier: backend
 spec:
   selector:
     matchLabels:      
-      app: ping-pong
+      app: ping
       tier: backend
   replicas: 2
   template:
     metadata:
-      name: ping-pong-ms
+      name: ping-ms
       labels:
-        app: ping-pong
+        app: ping
         tier: backend
     spec:
       containers:
-        - name: ping-pong-ms
-          image: kipu23/ping-pong-ms:1.0.1
+        - name: ping-ms
+          image: kipu23/ping-ms:1.0.0
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
             - name: PingDatabaseSettings__ConnectionString
-              value: mongodb://ping:pong@ping-pong-mongo:27017/ping
+              value: mongodb://ping:pong@ping-mongo:27017/ping
             - name: PingDatabaseSettings__DatabaseName
               value: ping
             - name: PingDatabaseSettings__CollectionName

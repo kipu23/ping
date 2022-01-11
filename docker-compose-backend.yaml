@@ -2,9 +2,9 @@ version: '3.1'
 
 services:
 
-  ping-pong-mongo:
-    image: ping-pong-mongo
-    container_name: ping-pong-mongo
+  ping-mongo:
+    image: ping-mongo
+    container_name: ping-mongo
     restart: always
     build:
       context: .
@@ -17,25 +17,25 @@ services:
     volumes:
       - ./env/database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
-      - ping-pong-network
+      - ping-network
 
-  ping-pong-ms:
-    image: ping-pong-ms
-    container_name: ping-pong-ms
+  ping-ms:
+    image: ping-ms
+    container_name: ping-ms
     restart: always
     build:
       context: .
       dockerfile: ./src/ms/Dockerfile
     ports:
-      - 5000:80
+      - 6002:80
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - PingDatabaseSettings__ConnectionString=mongodb://ping:pong@ping-pong-mongo:27017/ping
+      - PingDatabaseSettings__ConnectionString=mongodb://ping:pong@ping-mongo:27017/ping
       - PingDatabaseSettings__DatabaseName=ping
       - PingDatabaseSettings__CollectionName=pings
     networks:
-      - ping-pong-network
+      - ping-network
 
 networks:
-  ping-pong-network:
-    name: ping-pong-network
+  ping-network:
+    name: ping-network
