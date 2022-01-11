@@ -1,5 +1,5 @@
-# Ping-Pong
-A ping-pong applicaiton to serve as a bootstrap code
+# Ping
+A ping applicaiton to serve as a starter code
 
 This code serves as a starting point for a microservice application. It contains a MongoDb database, a C# backend, a C# BFF, and an Angular ui.
 
