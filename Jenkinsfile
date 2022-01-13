@@ -1,3 +1,4 @@
+
 pipeline {
     agent any
 
@@ -17,5 +18,4 @@ pipeline {
                 echo 'Deploying....'
             }
         }
-    }
-}
+
