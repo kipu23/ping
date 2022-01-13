@@ -13,9 +13,13 @@ pipeline {
                 echo 'Creating artifacts...'
                 sh """
                     TAG=\$(git describe --tags --abbrev=0)
-                    echo "The value is \$TAG"
                     docker image tag ping-ms kipu23/ping-ms:\$TAG
                     docker image tag ping-ui kipu23/ping-ui:\$TAG
+                """
+                echo 'Uploading artifacts to DockerHub...'
+                sh """
+                    docker push kipu23/ping-ms:\$TAG
+                    docker push kipu23/ping-ui:\$TAG
                 """
             }
         }
