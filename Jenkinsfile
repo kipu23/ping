@@ -6,7 +6,6 @@ pipeline {
             steps {
                 echo 'Building..'
                 sh(script: """
-                cd ./ping
                 docker-compose -f docker-compose-build.yaml build --parallel
                 """)
             }
