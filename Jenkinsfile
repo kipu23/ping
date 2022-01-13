@@ -9,7 +9,7 @@ pipeline {
             }
             
         }
-        stage'Artifact') {
+        stage('Artifact') {
             steps {
                 echo 'Creating artifacts...'
             }
