@@ -11,6 +11,7 @@ pipeline {
         stage('Artifact') {
             steps {
                 echo 'Creating artifacts...'
+                sh "git describe --tags --abbrev=0"
             }
         }
         stage('Test') {
