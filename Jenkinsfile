@@ -1,10 +1,21 @@
-node('jenkins-slave') {
-    
-     stage('build') {
-        sh(script: """
-            git clone https://github.com/kipu23/ping
-            cd ./ping
-            docker-compose -f docker-compose-build.yaml build --parallel
-        """)
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building..'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'Testing..'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
     }
 }

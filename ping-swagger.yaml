@@ -1,0 +1,61 @@
+openapi: 3.0.1
+info:
+  title: Ping
+  description: 'A ping applicaiton to serve as a starter code'
+  contact:
+    email: kipu80@gmail.com
+  version: 1.0.0
+servers:
+- url: http://localhost:6002/api/
+- url: http://8fc072c0923e49668fbc.westeurope.aksapp.io/api/
+tags:
+- name: ping
+  description: Simple ping application
+  externalDocs:
+    description: Find out more
+    url: https://github.com/kipu23/ping
+paths:
+  /ping:
+    get:
+      tags:
+      - ping
+      summary: Get all messages
+      description: Get all messages stored in database
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Ping'
+    post:
+      tags:
+      - ping
+      summary: Add a new message to the database
+      requestBody:
+        description: Message that needs to be added to the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Ping'
+        required: true
+      responses:
+        405:
+          description: Invalid input
+          content: {}
+components:
+  schemas:
+    Ping:
+      type: object
+      required:
+      - "message"
+      properties:
+        id:
+          type: string
+        message:
+          type: string
+        timestamp:
+          type: string
+

@@ -21,6 +21,11 @@ As we need the database for the development, we create a *docker-compose-dev.yam
 
 
 ### Create MS
+
+- create a swagger for the endpoints
+  - open editor.swagger.io
+  - 
+
 Now, we should create the microservice with the business logic. We do this based on the following tutorial from microsoft: https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-mongo-app?view=aspnetcore-3.1&tabs=visual-studio
 
 - in VS, create a new ASP.NET Core Web Application project with API template
@@ -143,6 +148,7 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
   - kubectl create namespace kube-prometheus-stack
   - kubectl config set-context --current --namespace=kube-prometheus-stack
 - https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
+- default pass: admin/prom-operator
 
 ## install jenkins into *jenkins* namespace
 (https://www.jenkins.io/doc/book/installing/kubernetes/#create-a-persistent-volume)
@@ -150,9 +156,10 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 
 
 # Backlog:
-Let's devops:
 
-- ui: should work with enter key
+- ui
+  - should work with enter key
+  - rename title from ui to ping
 
 - create jenkins pipeline
   - implement automatic deployment to the kubernetes environment
