@@ -4,20 +4,24 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'Building..'
-                sh(script: """
-                docker-compose -f docker-compose-build.yaml build --parallel
-                """)
+                echo 'Building...'
+                step([$class: 'DockerComposeBuilder', dockerComposeFile: 'docker-compose-build.yaml', option: [$class: 'StartAllServices'], useCustomDockerComposeFile: true])
+            }
+            
+        }
+        stage'Artifact') {
+            steps {
+                echo 'Creating artifacts...'
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing..'
+                echo 'Testing...'
             }
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                echo 'Deploying...'
             }
         }
     }
