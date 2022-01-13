@@ -11,7 +11,12 @@ pipeline {
         stage('Artifact') {
             steps {
                 echo 'Creating artifacts...'
-                sh "git describe --tags --abbrev=0"
+                sh """
+                    TAG=\$(git describe --tags --abbrev=0)
+                    echo "The value is \$TAG"
+                    docker image tag ping-ms kipu23/ping-ms:\$TAG
+                    docker image tag ping-ui kipu23/ping-ui:\$TAG
+                """
             }
         }
         stage('Test') {
