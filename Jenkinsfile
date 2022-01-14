@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+	environment {
+		DOCKERHUB_CREDENTIALS=credentials('dockerhub-kipu23')
+	
+
     stages {
         stage('Build') {
             steps {
@@ -8,6 +12,12 @@ pipeline {
                 sh "docker-compose -f docker-compose-build.yaml build --parallel"
             }
         }
+        stage('Login to DockerHub') {
+
+			steps {
+				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+			}
+		}
         stage('Artifact') {
             steps {
                 echo 'Creating artifacts...'
