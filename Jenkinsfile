@@ -3,7 +3,7 @@ pipeline {
 
 	environment {
 		DOCKERHUB_CREDENTIALS=credentials('dockerhub-kipu23')
-	
+    }
 
     stages {
         stage('Build') {
