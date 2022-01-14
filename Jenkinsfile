@@ -12,12 +12,6 @@ pipeline {
                 sh "docker-compose -f docker-compose-build.yaml build --parallel"
             }
         }
-        stage('Login to DockerHub') {
-
-			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-			}
-		}
         stage('Artifact') {
             steps {
                 echo 'Creating artifacts...'
@@ -25,6 +19,7 @@ pipeline {
                     TAG=\$(git describe --tags --abbrev=0)
                     docker image tag ping-ms kipu23/ping-ms:\$TAG
                     docker image tag ping-ui kipu23/ping-ui:\$TAG
+                    echo \$DOCKERHUB_CREDENTIALS_PSW | docker login -u \$DOCKERHUB_CREDENTIALS_USR --password-stdin
                     docker push kipu23/ping-ms:\$TAG
                     docker push kipu23/ping-ui:\$TAG
                 """
