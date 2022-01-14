@@ -3,7 +3,7 @@ version: '3.1'
 services:
 
   ping-ms:
-    image: ping-ms
+    image: ping-ms:${TAG}
     container_name: ping-ms
     restart: always
     build:
@@ -11,7 +11,7 @@ services:
       dockerfile: ./src/ms/Dockerfile
 
   ping-ui:
-    image: ping-ui
+    image: ping-ui:${TAG}
     container_name: ping-ui
     restart: always
     build:
