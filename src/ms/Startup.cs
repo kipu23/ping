@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ms.Models;
 using ms.Services;
+using Prometheus;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,8 @@ namespace ms
             app.UseCors();
 
             app.UseAuthorization();
+
+            app.UseMetricServer();
 
             app.UseEndpoints(endpoints =>
             {

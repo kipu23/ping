@@ -48,6 +48,20 @@ services:
     networks:
       - ping-network
 
+  ping-prometheus:
+    image: prom/prometheus:0.18.0
+    container_name: ping-prometheus
+    restart: always
+    ports:
+      - "6090:9090"
+    volumes:
+      - ./env/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./env/prometheus:/prometheus
+    command:
+      - "-config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - ping-network
+
 networks:
   ping-network:
     name: ping-network

@@ -1,0 +1,10 @@
+# prometheus.yml
+global:
+    scrape_interval: 3s
+    external_labels:
+        monitor: 'ping-monitor'
+scrape_configs:
+    - job_name: 'ping-ms'
+      scrape_interval: 5s
+      target_groups:
+          - targets: ['host.docker.internal:6002']
