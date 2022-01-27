@@ -68,6 +68,7 @@ namespace ms
             app.UseAuthorization();
 
             app.UseMetricServer();
+            app.UseHttpMetrics();
 
             app.UseEndpoints(endpoints =>
             {

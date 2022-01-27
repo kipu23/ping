@@ -20,12 +20,9 @@ services:
       - ping-network
 
   ping-ms:
-    image: ping-ms
+    image: kipu23/ping-ms:${APP_VERSION}
     container_name: ping-ms
     restart: always
-    build:
-      context: .
-      dockerfile: ./src/ms/Dockerfile
     ports:
       - 6002:80
     environment:
@@ -37,12 +34,9 @@ services:
       - ping-network
 
   ping-ui:
-    image: ping-ui
+    image: kipu23/ping-ui:${APP_VERSION}
     container_name: ping-ui
     restart: always
-    build:
-      context: .
-      dockerfile: ./src/ui/Dockerfile
     ports:
       - 6001:80
     networks:
@@ -77,7 +71,7 @@ services:
       - ./env/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
     networks:
       - ping-network
-      
+
 networks:
   ping-network:
     name: ping-network
