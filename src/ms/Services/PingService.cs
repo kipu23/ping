@@ -1,5 +1,6 @@
 ﻿using MongoDB.Driver;
 using ms.Models;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,14 +20,23 @@ namespace ms.Services
             _pings = database.GetCollection<Ping>(settings.CollectionName);
         }
 
-        public List<Ping> Get() =>
-            _pings.Find(ping => true).ToList();
+        public List<Ping> Get()
+        {
+            Logging.LoggingHelper.WriteControllerInfoLog("Get");
+            return _pings.Find(ping => true).ToList();
+        }
 
-        public Ping Get(string id) =>
-            _pings.Find<Ping>(ping => ping.Id == id).FirstOrDefault();
+        public Ping Get(string id)
+        {
+            Logging.LoggingHelper.WriteControllerInfoLog("Get");
+            return _pings.Find<Ping>(ping => ping.Id == id).FirstOrDefault();
+        }
+
 
         public Ping Create(Ping ping)
         {
+            Logging.LoggingHelper.WriteControllerInfoLog("Create");
+
             _pings.InsertOne(ping);
             return ping;
         }

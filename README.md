@@ -133,6 +133,20 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 - ingress:
   - create *ping-ingress.yaml*
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## deploy to k8s
 - install azure cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
 - create cluster (https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal)
@@ -141,6 +155,13 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 - create multiple dns addresses for the app
   - search for the DNS zone, and add record set with type A. IP address is the public ip of the ingress controller
 - update and run the yaml files (we need to update the ui and the ingress files)
+
+
+
+
+
+
+
 
 ## install prometheus stack into *monitoring* namespace
 - https://www.youtube.com/watch?v=QoDqxm7ybLc&t=1s
@@ -169,6 +190,8 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 - create liveness probes
 
 - implement metrics
+  - https://www.youtube.com/watch?v=o4tdSrFnkvw
+- 
 - implement logging
 - create monitoring (prometheus + grafana)
 - create log server (elasticsearch + kibana)

@@ -74,10 +74,24 @@ services:
       - ping-prometheus
     volumes:
       - ./env/grafana/prometheus-datasource.yaml:/etc/grafana/provisioning/datasources/prometheus-datasource.yaml
+      - ./env/grafana/loki-datasource.yaml:/etc/grafana/provisioning/datasources/loki-datasource.yaml
       - ./env/grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
     networks:
       - ping-network
       
+  ping-loki:
+    image: grafana/loki:master
+    container_name: ping-loki
+    ports:
+      - "6100:3100"
+    restart: always
+    command: -config.file=/etc/loki/local-config.yaml
+    volumes:
+      - ./env/loki/data:/loki
+    networks:
+      - ping-network
+
+
 networks:
   ping-network:
     name: ping-network

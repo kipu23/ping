@@ -351,3 +351,6 @@ MigrationBackup/
 
 # PROMETHEUS
 /env/prometheus/data
+
+# LOKI
+/env/loki/data

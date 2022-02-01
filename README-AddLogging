@@ -1,0 +1,11 @@
+
+https://serilog.net/
+
+https://github.com/serilog/serilog/wiki/Getting-Started
+
+https://stackify.com/serilog-tutorial-net-logging/
+
+
+
+dotnet add package Serilog.Sinks.Console
+dotnet add package Serilog.Sinks.Loki
