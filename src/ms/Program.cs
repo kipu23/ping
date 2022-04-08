@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
-using Serilog.Sinks.Grafana.Loki;
 using Serilog.Events;
 
 namespace ms
@@ -20,18 +19,19 @@ namespace ms
             // set up successfully.
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.Console()
+                .Enrich.WithK8sPodName()
                 .CreateBootstrapLogger();
 
             try
             {
-                Log.Information("Starting up!");
+                Log.Information("Application started.");
                 CreateHostBuilder(args).Build().Run();
-                Log.Information("Stopped cleanly");
+                Log.Information("Stopped cleanly.");
                 return 0;
             }
             catch (Exception ex)
             {
-                Log.Fatal(ex, "An unhandled exception occured during bootstrapping");
+                Log.Fatal(ex, "An unhandled exception occured during bootstrapping.");
                 return 1;
             }
             finally
@@ -45,10 +45,7 @@ namespace ms
             Host.CreateDefaultBuilder(args)
                 .UseSerilog((context, services, configuration) => configuration
                     .ReadFrom.Configuration(context.Configuration)
-                    .Enrich.FromLogContext()
-                    .Enrich.WithMachineName()
-                    .Enrich.WithEnvironmentUserName()
-                    .Enrich.WithEnvironmentName()
+                    .Enrich.WithK8sPodName()
                 )
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

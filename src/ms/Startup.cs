@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using ms.Models;
 using ms.Services;
 using Prometheus;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;

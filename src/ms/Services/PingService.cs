@@ -3,6 +3,7 @@ using ms.Models;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,8 +36,8 @@ namespace ms.Services
 
         public Ping Create(Ping ping)
         {
+            Serilog.Debugging.SelfLog.Enable(msg => Debug.WriteLine(msg));
             Logging.LoggingHelper.WriteControllerInfoLog("Create");
-
             _pings.InsertOne(ping);
             return ping;
         }

@@ -113,11 +113,11 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 ## Add our images to dockerhub
 - create an account at hub.docker.com if you don't have any
 - tag the images
-  - docker image tag ping-ms kipu23/ping-ms:1.0.0
-  - docker image tag ping-ui kipu23/ping-ui:1.0.0
+  - docker image tag ping-ms kipu23/ping-ms:1.0.4
+  - docker image tag ping-ui kipu23/ping-ui:1.0.4
 - push the images to the registry
-  - docker push kipu23/ping-ms:1.0.0
-  - docker push kipu23/ping-ui:1.0.0
+  - docker push kipu23/ping-ms:1.0.4
+  - docker push kipu23/ping-ui:1.0.4
 
 ## Create kubernetes yaml files
 (https://kubernetes.io/docs/concepts/cluster-administration/manage-deployment/)
@@ -136,22 +136,8 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 
 
 
-
-
-
-
-
-
-
-
-
-
-
 ## deploy to k8s
-- install azure cli (https://docs.microsoft.com/en-us/cli/azure/install-azure-cli-windows?tabs=azure-cli)
-- create cluster (https://docs.microsoft.com/en-us/azure/aks/kubernetes-walkthrough-portal)
-- install kubectl (https://kubernetes.io/docs/tasks/tools/install-kubectl-windows/)
-- configure kubectl for multiple clusters (https://kubernetes.io/docs/tasks/access-application-cluster/configure-access-multiple-clusters/)
+
 - create multiple dns addresses for the app
   - search for the DNS zone, and add record set with type A. IP address is the public ip of the ingress controller
 - update and run the yaml files (we need to update the ui and the ingress files)
@@ -163,13 +149,7 @@ Now, the application is ready, and now let's create the kubernetes yaml files. B
 
 
 
-## install prometheus stack into *monitoring* namespace
-- https://www.youtube.com/watch?v=QoDqxm7ybLc&t=1s
-- create new namespace for prometheus
-  - kubectl create namespace kube-prometheus-stack
-  - kubectl config set-context --current --namespace=kube-prometheus-stack
-- https://github.com/prometheus-community/helm-charts/tree/main/charts/kube-prometheus-stack
-- default pass: admin/prom-operator
+
 
 ## install jenkins into *jenkins* namespace
 (https://www.jenkins.io/doc/book/installing/kubernetes/#create-a-persistent-volume)

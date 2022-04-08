@@ -38,7 +38,8 @@ spec:
     spec:
       containers:
         - name: ping-ms
-          image: kipu23/ping-ms:1.0.0
+          image: kipu23/ping-ms:1.0.5
+          imagePullPolicy: Always
           env:
             - name: ASPNETCORE_ENVIRONMENT
               value: Development
@@ -48,3 +49,24 @@ spec:
               value: ping
             - name: PingDatabaseSettings__CollectionName
               value: pings
+            - name: Serilog__WriteTo__1__Args__uri
+              value: http://loki.monitoring:3100
+          volumeMounts:
+            - name: podinfo
+              mountPath: /etc/podinfo
+      volumes:
+        - name: podinfo
+          downwardAPI:
+            items:
+              - path: "namespace"
+                fieldRef:
+                  fieldPath: metadata.namespace
+              - path: "labels"
+                fieldRef:
+                  fieldPath: metadata.labels
+              - path: "name"
+                fieldRef:
+                  fieldPath: metadata.name
+              - path: "uid"
+                fieldRef:
+                  fieldPath: metadata.uid

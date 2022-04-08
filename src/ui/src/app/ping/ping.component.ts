@@ -31,6 +31,7 @@ export class PingComponent implements OnInit {
   onSend() {
     if (this.pingForm.controls.message.value){
       this.service.sendMessage(this.pingForm.controls.message.value);
+      window.location.reload();
     }
 
   }

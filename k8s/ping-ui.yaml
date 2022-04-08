@@ -11,7 +11,7 @@ data:
     {
       "production": true,
       "settings": {
-        "backend": "http://8fc072c0923e49668fbc.westeurope.aksapp.io/api/ping"
+        "backend": "http://4aebeaad5fec4677916c.westeurope.aksapp.io/api/ping"
       }
     }
 ---
@@ -55,7 +55,8 @@ spec:
     spec:
       containers:
         - name: ping-ui
-          image: kipu23/ping-ui:1.0.0
+          image: kipu23/ping-ui:1.0.4
+          imagePullPolicy: Always
           volumeMounts:
             - name: config
               mountPath: /usr/share/nginx/html/assets/environments/environment.json

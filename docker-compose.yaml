@@ -33,6 +33,7 @@ services:
       - PingDatabaseSettings__ConnectionString=mongodb://ping:pong@ping-mongo:27017/ping
       - PingDatabaseSettings__DatabaseName=ping
       - PingDatabaseSettings__CollectionName=pings
+      - Serilog__WriteTo__1__Args__uri=http://ping-loki:3100
     networks:
       - ping-network
 
@@ -90,7 +91,6 @@ services:
       - ./env/loki/data:/loki
     networks:
       - ping-network
-
 
 networks:
   ping-network:

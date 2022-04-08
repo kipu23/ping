@@ -9,7 +9,7 @@ metadata:
     kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
-  - host: 8fc072c0923e49668fbc.westeurope.aksapp.io
+  - host: 4aebeaad5fec4677916c.westeurope.aksapp.io
     http:
       paths:
       - path: /api/ping
@@ -19,7 +19,7 @@ spec:
             name: ping-ms
             port:
               number: 80
-  - host: ping.8fc072c0923e49668fbc.westeurope.aksapp.io
+  - host: ping.4aebeaad5fec4677916c.westeurope.aksapp.io
     http:
       paths:
       - path: /
